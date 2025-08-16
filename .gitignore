@@ -180,5 +180,8 @@ cython_debug/
 .cursorignore
 .cursorindexingignore
 
-# Dados específicos do Bot Barbie
+
+# Arquivos de configuração e dados sensíveis
+.env
+config.jsonc 
 data/
