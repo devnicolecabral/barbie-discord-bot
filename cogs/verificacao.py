@@ -6,7 +6,7 @@ from datetime import datetime, timezone
 import json5
 import asyncio
 
-# --- Caminhos para os arquivos de dados ---
+# Caminhos para os arquivos de dados
 VERIFICATIONS_FILE = 'data/verifications.json'
 UNVERIFIED_USERS_FILE = 'data/unverified_users.json'
 
@@ -18,7 +18,7 @@ class Verificacao(commands.Cog):
             self.config = json5.load(f)
         self.check_unverified_members.start()
 
-    # --- Funções Auxiliares (sem alterações) ---
+    # Funções Auxiliares
     def _load_data(self, file_path):
         if not os.path.exists(file_path): return {}
         try:
@@ -31,11 +31,11 @@ class Verificacao(commands.Cog):
         with open(file_path, 'w', encoding='utf-8') as f:
             json.dump(data, f, indent=4)
 
-    # --- COMANDO !VERIFICAR (ATUALIZADO COM A NOVA LÓGICA) ---
+    # COMANDO !VERIFICAR
     @commands.command(name='verificar')
     async def verificar(self, ctx, membra: discord.Member):
         
-        # --- LÓGICA DE PERMISSÃO ATUALIZADA ---
+        # LÓGICA DE PERMISSÃO ATUALIZADA 
         if not isinstance(ctx.author, discord.Member): return
 
         staff_id_str = str(ctx.author.id)
@@ -63,9 +63,8 @@ class Verificacao(commands.Cog):
         if not (is_main_staff or is_prep_heart_staff):
             await ctx.send(f"{ctx.author.mention}, você não tem permissão para usar este comando.", delete_after=10)
             return
-        # --- FIM DA LÓGICA DE PERMISSÃO ---
 
-        # 2. Ação de Verificação (sem alterações)
+        # 2. Ação de Verificação 
         unverified_role = ctx.guild.get_role(int(self.config['unverified_role_id']))
         diva_role = ctx.guild.get_role(int(self.config['diva_role_id']))
         if not unverified_role or not diva_role: return await ctx.send("Erro: Cargos de verificação não encontrados.")
@@ -77,14 +76,13 @@ class Verificacao(commands.Cog):
         except Exception as e:
             return await ctx.send(f"Ocorreu um erro ao alterar cargos: {e}")
 
-        # 3. Atualizar Contagem (sem alterações)
+        # 3. Atualizar Contagem 
         verifications_data = self._load_data(VERIFICATIONS_FILE)
         current_count = verifications_data.get(staff_id_str, 0)
         new_count = current_count + 1
         verifications_data[staff_id_str] = new_count
         self._save_data(verifications_data, VERIFICATIONS_FILE)
 
-        # --- LÓGICA DE LOG ATUALIZADA ---
         # 4. Enviar o Log para o Canal Correto
         log_channel = None
         
@@ -108,11 +106,9 @@ class Verificacao(commands.Cog):
         else:
             await ctx.send("Aviso: O canal de log para esta verificação não foi encontrado.")
             print(f"AVISO: Canal de log não encontrado para a staff {ctx.author.name} ({staff_id_str})")
-        # --- FIM DA LÓGICA DE LOG ---
 
 
-    # --- Listener e Tarefa (sem alterações) ---
-    # O resto do arquivo continua exatamente igual
+    # Listener e Tarefa 
     @commands.Cog.listener()
     async def on_member_join(self, member):
         if member.guild.id != int(self.config['dreamhouse_server_id']): return

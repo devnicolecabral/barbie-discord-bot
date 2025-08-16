@@ -48,7 +48,7 @@ class Ranking(commands.Cog):
         # 'reverse=True' faz ser do maior para o menor
         sorted_staff = sorted(verifications_data.items(), key=lambda item: item[1], reverse=True)
 
-        # 4. Montar a mensagem (Embed)
+        # 4. Montar a mensagem
         embed = discord.Embed(
             title="🏆 Ranking de Verificações da Staff",
             description="Quem mais ajudou a casa a crescer! 💖",

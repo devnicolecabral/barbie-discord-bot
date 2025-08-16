@@ -29,16 +29,15 @@ class TicketManager(commands.Cog):
         print(f"[{datetime.now().strftime('%H:%M:%S')}] TICKET_MANAGER: Verificando tickets antigos...")
         for channel in ticket_category.text_channels:
             
-            # --- TRAVA DE SEGURANÇA ADICIONAL ---
-            # Se o nome do canal contiver "verifique-se", PULE IMEDIATAMENTE.
-            # Isso protege o canal principal, não importa os símbolos ou emojis.
+            # TRAVA DE SEGURANÇA ADICIONAL POR CONTA DO BUG QUE APAGOU TUDO
+            # Se o nome do canal contiver "verifique-se", PULAR IMEDIATAMENTE.
+            # Isso protege o canal principal, não importa os símbolos ou emojis
             if "verifique-se" in channel.name:
                 continue
-            # --- FIM DA TRAVA DE SEGURANÇA ---
+            # FIM DA TRAVA DE SEGURANÇA
 
-            # Checagem original (continua importante)
-            # Só consideramos canais que começam com 'ticket-' ou 'verificacao-'.
-            # Se o Ken criar tickets com outro nome, adicione o prefixo aqui.
+            # Checagem original
+            # Só considera canais que começam com 'ticket-' ou 'verificacao-'.
             if not channel.name.startswith(('ticket-', 'verificacao-')):
                 continue
             
