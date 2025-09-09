@@ -1,15 +1,13 @@
 import discord
 from discord.ext import commands, tasks
 from datetime import datetime, timezone
-import json5
 import asyncio
 
 class TicketManager(commands.Cog):
     def __init__(self, bot):
         self.bot = bot
-        with open('config.jsonc', 'r', encoding='utf-8') as f:
-            self.config = json5.load(f)
-        self.close_old_tickets.start()
+        self.config = bot.config # Atualizei pra pegar a config diretamente do bot
+        # self.close_old_tickets.start()  # função de fechar os tickets temporariamente suspensa para testes 
 
     @tasks.loop(hours=1)
     async def close_old_tickets(self):
@@ -46,7 +44,7 @@ class TicketManager(commands.Cog):
             if age.total_seconds() > limit_seconds:
                 print(f"TICKET_MANAGER: O canal de ticket '{channel.name}' é antigo. Fechando.")
                 try:
-                    await channel.send("> 自動閉鎖\n> Este ticket está sendo fechado automaticamente por inatividade.")
+                    await channel.send("💄 **Limpando a casa, amore!** 💄\n> Este ticket está sendo fechado por inatividade. Caso queira entrar no nosso servidor novamente, sinta-se a vontade e bem-vinda, basta apenas clicar para verificar-se novamente! Beijos da Barbie!!")
                     await asyncio.sleep(10)
                     await channel.delete(reason="Fechado automaticamente por inatividade")
                 except Exception as e:

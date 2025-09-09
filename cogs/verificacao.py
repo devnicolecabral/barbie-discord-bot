@@ -12,13 +12,11 @@ UNVERIFIED_USERS_FILE = 'data/unverified_users.json'
 
 
 class Verificacao(commands.Cog):
-    # MÉTODO __INIT__ CORRIGIDO 
     def __init__(self, bot):
         self.bot = bot
-        # Pega a config diretamente do bot, que foi carregada no main.py a partir das Secrets/Variables. É mais eficiente e funciona online.
         self.config = bot.config 
         self.check_unverified_members.start()
-    # FIM DA CORREÇÃO 
+
 
     # Funções Auxiliares
     def _load_data(self, file_path):

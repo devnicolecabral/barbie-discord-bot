@@ -1,7 +1,6 @@
 import discord
 from discord.ext import commands
 import json
-import json5
 import os
 from datetime import datetime
 
@@ -11,8 +10,7 @@ VERIFICATIONS_FILE = 'data/verifications.json'
 class Ranking(commands.Cog):
     def __init__(self, bot):
         self.bot = bot
-        with open('config.jsonc', 'r', encoding='utf-8') as f:
-            self.config = json5.load(f)
+        self.config = bot.config # Pega a config diretamente do bot
 
     def _load_verifications_data(self):
         """Carrega os dados de verificação do arquivo JSON."""
